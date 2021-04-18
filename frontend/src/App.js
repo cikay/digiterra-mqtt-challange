@@ -15,8 +15,8 @@ function App() {
     messages,
   } = useChartsContext()
   return (
-    <>
-      <Row>
+    <div className='my-2'>
+      <Row className='mx-auto'>
         <Col xs={12} sm={4}>
           <ClientsChard
             labels={times}
@@ -31,7 +31,7 @@ function App() {
           <MessagesCharts labels={times} messages={messages} />
         </Col>
       </Row>
-    </>
+    </div>
   )
 }
 
