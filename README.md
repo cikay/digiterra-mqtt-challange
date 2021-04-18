@@ -15,9 +15,11 @@ Go to `backend` directory
 `cd backend`
 
 Install dependencies
+
 `npm i`
 
 Run
+
 `npm start`
 
 ## Frontend set up
