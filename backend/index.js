@@ -1,4 +1,4 @@
-const mqtt = require('../frontend/node_modules/mqtt')
+const mqtt = require("mqtt")
 const mqttClient = mqtt.connect('ws://test.mosquitto.org:8080')
 
 const queryTopic = 'resolveMyQuery'
@@ -12,7 +12,6 @@ mqttClient.on('connect', function () {
     console.log('sent message', data)
   }, 5000)
 })
-
 
 function getData() {
   const activeSubscriptions = getRndInteger(5, 20)
