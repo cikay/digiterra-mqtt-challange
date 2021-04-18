@@ -27,11 +27,13 @@ function App() {
       const parsedData = JSON.parse(message)
       const { connected, disconnected } = parsedData
       console.log('connect, disconnect', connected, disconnected)
+      const date = new Date()
+      const time = `${date.getHours()}.${date.getMinutes()}.${date.getSeconds()}`
       setClientsChartData((prevState) => ({
         ...prevState,
         connectedList: [...prevState.connectedList, connected],
         disconnectedList: [...prevState.disconnectedList, disconnected],
-        labels: [...prevState.labels, new Date().getSeconds()],
+        labels: [...prevState.labels, time],
       }))
       console.log('parsedData', parsedData)
       console.log('clientsChartData', clientsChartData)

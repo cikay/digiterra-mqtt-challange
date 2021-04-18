@@ -1,18 +1,27 @@
-##Clone repostory command:
-git clone https://github.com/cikay/digiterra-mqtt-challange.git
+# Live demo
 
-##Backend set up
-go to backend directory
-cd backend
-install dependencies
-npm i
-run
-npm start
+....
 
-##Frontend set up
-go to frontend directory
-cd frontend
-install dependencies
-npm i
-run
-npm start
+# Run Project
+
+## Clone repostory command:
+
+`git clone https://github.com/cikay/digiterra-mqtt-challange.git`
+
+## Backend set up
+
+Go to backend directory
+`cd backend`
+Install dependencies
+`npm i`
+Run
+`npm start`
+
+## Frontend set up
+
+Go to frontend directory(make sure you are in project root directory)
+`cd frontend`
+Install dependencies
+`npm i`
+Run
+`npm start`
