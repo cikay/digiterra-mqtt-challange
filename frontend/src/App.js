@@ -1,58 +1,38 @@
 import React, { useState, useEffect } from 'react'
-import mqtt from 'mqtt'
-
-import clientsData from './components/clientsData'
 import { Row, Col } from 'react-bootstrap'
-import CustomizedChart from './components/CustomizedChart'
+import { useChartsContext, ChartsProvider } from './ChartsContext'
+import ActiveSubscribers from './components/ActiveSubscribers'
+import ClientsChard from './components/ClientsChard'
+import MessagesCharts from './components/MessagesChart'
+import withProvider from './hoc/withProvider'
 
-const queryTopic = 'resolveMyQuery'
-const responseTopic = 'responseFromServer'
-const url = 'ws://test.mosquitto.org:8080'
 function App() {
-  const [connectionStatus, setConnectionStatus] = React.useState(false)
-  const [clientsChartData, setClientsChartData] = useState({
-    labels: [],
-    connectedList: [],
-    disconnectedList: [],
-  })
-
-  useEffect(() => {
-    const mqttClient = mqtt.connect(url)
-    console.log('mqtt', mqtt)
-    mqttClient.on('connect', () => {
-      setConnectionStatus(true)
-      mqttClient.subscribe(queryTopic)
-    })
-    mqttClient.on('message', (topic, message) => {
-      const parsedData = JSON.parse(message)
-      const { connected, disconnected } = parsedData
-      console.log('connect, disconnect', connected, disconnected)
-      const date = new Date()
-      const time = `${date.getHours()}.${date.getMinutes()}.${date.getSeconds()}`
-      setClientsChartData((prevState) => ({
-        ...prevState,
-        connectedList: [...prevState.connectedList, connected],
-        disconnectedList: [...prevState.disconnectedList, disconnected],
-        labels: [...prevState.labels, time],
-      }))
-      console.log('parsedData', parsedData)
-      console.log('clientsChartData', clientsChartData)
-    })
-  }, [])
-
+  const {
+    activeSubscriptionsList,
+    disconnectedList,
+    connectedList,
+    times,
+    messages,
+  } = useChartsContext()
   return (
     <>
       <Row>
-        <Col xs={12} sm={6}>
-          <CustomizedChart
-            labels={clientsChartData.labels}
-            connectedList={clientsChartData.connectedList}
-            disconnectedList={clientsChartData.disconnectedList}
+        <Col xs={12} sm={4}>
+          <ClientsChard
+            labels={times}
+            connectedList={connectedList}
+            disconnectedList={disconnectedList}
           />
+        </Col>
+        <Col xs={12} sm={4}>
+          <ActiveSubscribers labels={times} data={activeSubscriptionsList} />
+        </Col>
+        <Col xs={12} sm={4}>
+          <MessagesCharts labels={times} messages={messages} />
         </Col>
       </Row>
     </>
   )
 }
 
-export default App
+export default withProvider(App, ChartsProvider)
